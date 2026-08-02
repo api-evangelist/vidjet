@@ -1,0 +1,44 @@
+# Vidjet Help Center
+
+> Help center for Vidjet
+
+## Getting Started
+
+- [Onboarding: the 3 steps you need to do](https://help.vidjet.io/en/articles/11392786-onboarding-the-3-steps-you-need-to-do.md): Follow these 3 steps to get started in 10 to 15 min!
+- [Vidjet walkthrough](https://help.vidjet.io/en/articles/10774323-vidjet-walkthrough.md): Quick introduction to our video platform.
+- [Import videos into Google Drive](https://help.vidjet.io/en/articles/9145421-import-videos-into-google-drive.md): Start your onboarding with the Vidjet team with this step.
+- [How Do I Make a Good Video?](https://help.vidjet.io/en/articles/5537372-how-do-i-make-a-good-video.md): Tips for creating successful video campaigns
+
+## Video Library
+
+- [Video library: import and manage videos](https://help.vidjet.io/en/articles/9207815-video-library-import-and-manage-videos.md): The Video Library is the place to import, rename and manage your video files.
+- [Add chapters to videos](https://help.vidjet.io/en/articles/11100628-add-chapters-to-videos.md): How to split videos into Instagram-like chapters \(timestamps\)
+- [2 ways to associate videos to PDPs](https://help.vidjet.io/en/articles/9902394-2-ways-to-associate-videos-to-pdps.md): Discover the 2 ways of doing it: from the Video library, or from the Product list.
+- [Video library: tag products to your videos](https://help.vidjet.io/en/articles/10419593-video-library-tag-products-to-your-videos.md): From your library, you can assign products to videos.
+- [Grouping videos into thumbnails](https://help.vidjet.io/en/articles/9133553-grouping-videos-into-thumbnails.md): By default, each video corresponds to its own thumbnail. However, you have the option to group multiple videos into a single thumbnail.
+- [Animate video thumbnails](https://help.vidjet.io/en/articles/9319836-animate-video-thumbnails.md): Display a GIF of your videos to drive more views.
+- [Update thumbnails with images](https://help.vidjet.io/en/articles/9556342-update-thumbnails-with-images.md): Import images to change video thumbnails
+- [Uploading a GIF](https://help.vidjet.io/en/articles/5534570-uploading-a-gif.md): How to upload a GIF into Vidjet
+
+## Analytics
+
+- [Read your Dashboard 📈](https://help.vidjet.io/en/articles/6867540-read-your-dashboard.md): Read, understand, and interpret your Vidjet dashboard. This will help you to take better decisions regarding your video-shopping strategy.
+
+## Products
+
+- [Import product feed to Vidjet](https://help.vidjet.io/en/articles/8446441-import-product-feed-to-vidjet.md): Use your product-feed tool to generate JSON, CSV or XML, and send products data to Vidjet.
+
+## Integrations
+
+- [Google Tag Manager Integration](https://help.vidjet.io/en/articles/5522826-google-tag-manager-integration.md): Integrating Vidjet with your website using Google Tag Manager
+- [Manual Integration \(script JS\)](https://help.vidjet.io/en/articles/5523099-manual-integration-script-js.md): Integrating Vidjet with your website manually
+- [Magento integration](https://help.vidjet.io/en/articles/11754452-magento-integration.md): Integrate Vidjet to Magento in 3 simple steps
+- [Wordpress & WooCommerce Integration](https://help.vidjet.io/en/articles/6364785-wordpress-woocommerce-integration.md): Integrating Vidjet with your website using Wordpress/WooCommerce
+- [WiX Integration](https://help.vidjet.io/en/articles/5523074-wix-integration.md): Integrating Vidjet with your website using WiX
+- [Shopify Integration](https://help.vidjet.io/en/articles/6364772-shopify-integration.md): Integrating Vidjet with your website using Shopify
+- [Salesforce Commerce Cloud integration](https://help.vidjet.io/en/articles/11774499-salesforce-commerce-cloud-integration.md): Follow these 3 steps to embed video widgets on your SFCC \(Salesforce Commerce Cloud\) website
+- [Webflow Integration](https://help.vidjet.io/en/articles/5522882-webflow-integration.md): Integrating Vidjet with your website using Webflow
+- [Klaviyo integration \(Email collector\)](https://help.vidjet.io/en/articles/6365002-klaviyo-integration-email-collector.md): Collect emails with Vidjet, and send them to Klaviyo 📩
+- [Google Sheets integration \(Email collector\)](https://help.vidjet.io/en/articles/6364646-google-sheets-integration-email-collector.md): Collect emails with Vidjet, and send them to Google Sheets 📩
+- [Integrate various domains to Vidjet](https://help.vidjet.io/en/articles/8294039-integrate-various-domains-to-vidjet.md): Get access to our multi-domain portal, to manager several websites from the same interface.
+- [Klaviyo integration](https://help.vidjet.io/en/articles/12097250-klaviyo-integration.md): Connect Vidjet to Klaviyo to Collect Emails from Videos

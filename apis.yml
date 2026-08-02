@@ -1,7 +1,27 @@
 aid: vidjet
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/vidjet.png
 name: Vidjet
-description: Vidjet is a company surfaced as a portfolio company of seedcamp and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: Vidjet is a shoppable video platform for e-commerce that lets merchants
+  embed on-site video without impacting page speed. Merchants build video feeds,
+  tag products inside videos, and display formats such as Stories, Carousel, Bubble,
+  Embed, Popup, and a Sticky Play Button across thousands of product pages. It is a
+  no-code product installed via a JavaScript embed, Google Tag Manager, or platform
+  plugins for Shopify, WooCommerce/WordPress, Magento, Wix, Webflow, PrestaShop, and
+  Salesforce Commerce Cloud, with analytics, multilingual support, and email
+  collection integrations to Klaviyo and Google Sheets. Vidjet is a Seedcamp
+  portfolio company. As of this profile it publishes no public developer REST API,
+  SDK, OAuth surface, or webhooks — integration is via the client-side embed script.
 url: https://raw.githubusercontent.com/api-evangelist/vidjet/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,9 +31,16 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
+- E-commerce
+- Video
+- Shoppable Video
+- Shopify
+- Conversion
+- Marketing
+- No-code
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -22,4 +49,27 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: http://vidjet.com
+  url: https://www.vidjet.io
+- type: HelpCenter
+  url: https://help.vidjet.io/
+- type: Documentation
+  url: https://help.vidjet.io/
+- type: Pricing
+  url: https://www.vidjet.io/pricing
+- type: Blog
+  url: https://www.vidjet.io/blog
+- type: SignUp
+  url: https://app.vidjet.io/
+- type: TermsOfService
+  url: https://www.vidjet.io/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.vidjet.io/privacy-policy
+- type: LLMsTxt
+  url: llms/vidjet-llms.txt
+- type: DomainSecurity
+  url: security/vidjet-domain-security.yml
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 2
+  pass: local-v1
