@@ -19,9 +19,14 @@ description: Vidjet is a shoppable video platform for e-commerce that lets merch
   no-code product installed via a JavaScript embed, Google Tag Manager, or platform
   plugins for Shopify, WooCommerce/WordPress, Magento, Wix, Webflow, PrestaShop, and
   Salesforce Commerce Cloud, with analytics, multilingual support, and email
-  collection integrations to Klaviyo and Google Sheets. Vidjet is a Seedcamp
-  portfolio company. As of this profile it publishes no public developer REST API,
-  SDK, OAuth surface, or webhooks — integration is via the client-side embed script.
+  collection integrations to Klaviyo and Google Sheets. The company behind it is
+  VIDJET TECHNOLOGIES, S.L. of Barcelona, Spain, a Seedcamp portfolio company.
+  Vidjet runs no developer program and publishes no API reference, OpenAPI, SDK,
+  OAuth surface, or webhook catalog. It does operate a first-party HTTP API at
+  app-api.vidjet.io, whose base URL and several endpoints are published by Vidjet
+  itself in the GPL-licensed WordPress plugin source and in the public embed
+  script — a real but undocumented API surface, not a product an integrator can
+  build against from published documentation.
 url: https://raw.githubusercontent.com/api-evangelist/vidjet/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -31,7 +36,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-08-13'
 tags:
 - Company
 - E-commerce
@@ -41,7 +46,42 @@ tags:
 - Conversion
 - Marketing
 - No-code
-apis: []
+- Widgets
+- Embed
+apis:
+- aid: vidjet:app-api
+  name: Vidjet App API
+  description: >-
+    The first-party HTTP API behind the Vidjet embed and the Vidjet platform
+    plugins, served from https://app-api.vidjet.io (Express). Vidjet publishes no
+    developer documentation, reference, or machine-readable contract for it, but
+    publishes the base URL and several endpoints itself: the GPL-licensed
+    WordPress plugin on WordPress.org calls POST /plugins/install, POST
+    /plugins/uninstall, POST /orders and /woocommerce/auth-callback, and the
+    public embed script at media.vidjet.io/client-app.js calls GET
+    /widgets?siteId=... to resolve which video campaigns render on a page.
+    Endpoint existence was verified by OPTIONS preflight (each returns 200 with an
+    Allow header, while unknown paths return 404) and GET /widgets was observed
+    returning 200 application/json without authentication. No OpenAPI, GraphQL
+    SDL, AsyncAPI, MCP server, or agent card is published on any Vidjet host.
+  humanURL: https://help.vidjet.io/en/articles/5523099-manual-integration-script-js
+  baseURL: https://app-api.vidjet.io
+  tags:
+  - Video
+  - Widgets
+  - E-commerce
+  - Embed
+  properties:
+  - type: Authentication
+    url: authentication/vidjet-authentication.yml
+  - type: Conventions
+    url: conventions/vidjet-conventions.yml
+  - type: DataModel
+    url: data-model/vidjet-data-model.yml
+  - type: Documentation
+    url: https://help.vidjet.io/en/articles/5523099-manual-integration-script-js
+  - type: SourceCode
+    url: https://wordpress.org/plugins/vidjet/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -64,12 +104,50 @@ common:
   url: https://www.vidjet.io/terms-of-service
 - type: PrivacyPolicy
   url: https://www.vidjet.io/privacy-policy
+- type: GettingStarted
+  url: https://help.vidjet.io/en/articles/11392786-onboarding-the-3-steps-you-need-to-do
+- type: Support
+  url: https://help.vidjet.io/
+- type: Login
+  url: https://app.vidjet.io/login
 - type: LLMsTxt
   url: llms/vidjet-llms.txt
 - type: DomainSecurity
   url: security/vidjet-domain-security.yml
+- type: Packages
+  url: packages/vidjet-packages.yml
+- type: Components
+  url: components/vidjet-components.yml
+- type: Plans
+  url: plans/vidjet-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/vidjet-rate-limits.yml
+- type: Lifecycle
+  url: lifecycle/vidjet-lifecycle.yml
+- type: Conformance
+  url: conformance/vidjet-conformance.yml
 x-enrichment:
-  date: '2026-07-21'
+  date: '2026-08-13'
   status: enriched
-  artifacts_added: 2
+  artifacts_added: 11
   pass: local-v1
+x-coverage:
+  state: covered
+  reason: no-machine-readable-spec
+  detail: >-
+    Vidjet runs a real first-party API at app-api.vidjet.io — its base URL and
+    five endpoints are published by Vidjet itself in the GPL WordPress plugin
+    source and the public embed script, and GET /widgets answers 200 JSON
+    anonymously — but Vidjet publishes no reference, no OpenAPI and no
+    /.well-known document for it, so 38 spec-path probes across six hosts all
+    missed.
+  evidence:
+  - url: https://app-api.vidjet.io/widgets
+    status: 200
+  - url: https://app-api.vidjet.io/openapi.json
+    status: 404
+  - url: https://www.vidjet.io/.well-known/security.txt
+    status: 404
+  - url: https://vidjet.statuspage.io
+    status: 200
+  checked: '2026-08-13'
