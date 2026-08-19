@@ -1,0 +1,82 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.vidjet.io/ , https://help.vidjet.io/ (llms.txt index),
+  https://vidjet.statuspage.io , https://www.vidjet.io/changelog , plus live
+  probes of app-api.vidjet.io on 2026-08-13
+note: >-
+  Vidjet publishes no versioning policy, no deprecation policy, no SLA, no
+  changelog and no status page. No StatusPage or Deprecation pointer is emitted in
+  apis.yml, because emitting either would assert a page Vidjet does not serve.
+versioning:
+  scheme: none
+  current: null
+  docs: null
+  evidence: >-
+    Unversioned paths on app-api.vidjet.io; /v1/openapi.json and /v1/* probes
+    returned 404; no API-Version response header observed.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  evidence: >-
+    No Sunset or Deprecation header (RFC 8594) on any observed response; no
+    deprecation policy page found on vidjet.io or the help center.
+  observed_breaking_change:
+    what: >-
+      Sites integrated before November 2024 must update their embed script URL to
+      https://media.vidjet.io/client-app.js.
+    communicated_via: https://help.vidjet.io/en/articles/5523099-manual-integration-script-js
+    note: >-
+      A breaking distribution change announced inside a support article, with no
+      dated notice, no sunset date, and no deprecation header — recorded as
+      evidence that changes happen without a policy, not as a policy.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  probed:
+  - url: https://status.vidjet.io
+    status: 0
+    note: does not resolve (no DNS record)
+  - url: https://vidjet.statuspage.io
+    status: 200
+    note: >-
+      SOFT HIT, REJECTED. Redirects to atlassian.com/software/statuspage — the
+      Statuspage marketing site, not a Vidjet status page. The Statuspage API at
+      /api/v2/summary.json 302s to statuspage.io. No status page exists.
+changelog:
+  url: null
+  probed:
+  - url: https://www.vidjet.io/changelog
+    status: 404
+  package_changelog:
+    where: wordpress.org/plugins/vidjet changelog.txt
+    entries: 4
+    dated: false
+    stale: true
+    note: >-
+      The WordPress plugin bundles an undated 4-entry changelog that stops at
+      1.1.2 while the shipped Stable tag is 1.1.4. It covers the plugin, not the
+      API, and carries no dates, so it is recorded in packages/ as release history
+      and earns no ChangeLog pointer.
+roadmap:
+  url: null
+  probed:
+  - url: https://www.vidjet.io/roadmap
+    status: 404
+maturity:
+  api_stage: undocumented-internal
+  evidence: >-
+    A live, first-party, publicly-reachable HTTP API whose only published
+    description is inside a GPL plugin's source and a minified embed script.
+    Vidjet markets "API integration" as a feature row on its pricing page but
+    publishes no reference for it.
+deprecated_operations: []
+company:
+  legal_name: VIDJET TECHNOLOGIES, S.L.
+  address: C/ Llacuna 162, 08018 Barcelona, Spain
+  contact: contact@vidjet.io
+  source: https://www.vidjet.io/privacy-policy
+  copyright_year_on_site: 2025

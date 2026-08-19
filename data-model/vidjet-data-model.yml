@@ -1,0 +1,171 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  observed GET https://app-api.vidjet.io/widgets response (2026-08-13) +
+  wordpress.org/plugins/vidjet v1.1.4 request payloads
+  (includes/class-vidjet-api.php, includes/class-vidjet-settings.php) +
+  media.vidjet.io/client-app.js
+note: >-
+  There is no OpenAPI and no object reference to derive from. This graph is built
+  ONLY from field names that appear in real observed payloads — one anonymous API
+  response and the request bodies Vidjet's own plugin constructs. Fields whose
+  type could not be observed are marked type: unknown rather than guessed, and no
+  entity or relationship is included that does not appear in a published payload.
+completeness: partial
+entities:
+- name: Site
+  description: A merchant website tenant. The unit the embed script is keyed to.
+  id_field: _id
+  id_format: UUID v4
+  observed_in: GET /widgets (response.site)
+  fields:
+  - name: _id
+    type: string (uuid)
+  - name: websiteUrl
+    type: string (url)
+  - name: companyName
+    type: string
+  - name: country
+    type: string
+  - name: plugin
+    type: string
+    observed_values: [manual]
+  - name: integration
+    type: string
+    observed_values: [manual]
+    note: >-
+      The plugin sends integration values for the platform in use; only "manual"
+      was observed in the anonymous response.
+  - name: integrationDate
+    type: string (iso-8601)
+  - name: creationDate
+    type: string (iso-8601)
+  - name: modificationDate
+    type: string (iso-8601)
+  - name: currency
+    type: string
+    observed_in: POST /plugins/install request body
+  - name: language
+    type: string
+    observed_in: POST /plugins/install request body
+  - name: address
+    type: object
+    subfields: [country, line1, state, postal_code, city]
+    observed_in: POST /plugins/install request body
+  - name: email
+    type: string
+    observed_in: POST /plugins/install request body
+  - name: firstname
+    type: string
+    observed_in: POST /plugins/install request body
+  - name: lastname
+    type: string
+    observed_in: POST /plugins/install request body
+- name: Campaign
+  description: >-
+    A configured video widget (Stories, Carousel, Bubble, Embed, Popup, Sticky
+    Play Button) resolved for the current page.
+  id_field: _id
+  id_format: UUID v4
+  observed_in: >-
+    GET /widgets (response.campaignsReturned, campaignsToKill,
+    campaignsToShowManual) and hard-coded campaign ids in client-app.js
+  fields:
+  - name: _id
+    type: string (uuid)
+  note: >-
+    campaignsReturned was empty for both anonymous probes, so no campaign field
+    other than _id could be observed. Campaign structure is NOT reconstructed
+    here; the console at app.vidjet.io is a JS SPA and its payloads are
+    authenticated.
+- name: Order
+  description: A merchant order reported back to Vidjet for conversion attribution.
+  observed_in: POST /orders request body (WooCommerce plugin)
+  fields:
+  - name: siteId
+    type: string (uuid)
+  - name: orderId
+    type: string
+  - name: cartId
+    type: string
+  - name: totalATI
+    type: number
+    description: Order total, all taxes included.
+  - name: totalET
+    type: number
+    description: Order total, excluding taxes.
+  - name: status
+    type: string
+    description: Normalized WooCommerce order status (wc- prefix stripped).
+  - name: products
+    type: array<OrderLine>
+- name: OrderLine
+  description: One product line inside a reported order.
+  observed_in: POST /orders request body (products[])
+  fields:
+  - name: productId
+    type: string
+  - name: variantId
+    type: string
+  - name: name
+    type: string
+  - name: qty
+    type: integer
+  - name: totalATI
+    type: number
+  - name: totalET
+    type: number
+- name: Product
+  description: >-
+    A catalog product a video can be tagged to. Vidjet ingests these from a
+    merchant product feed rather than through the API.
+  observed_in: help.vidjet.io product-feed article
+  fields:
+  - name: name
+    type: string
+  - name: price
+    type: number
+  - name: image
+    type: string (url)
+  - name: stock
+    type: number
+  - name: description
+    type: string
+    required: false
+  note: >-
+    Product ingest is a manual, human-mediated process: the help center instructs
+    merchants to email a JSON/CSV/XML feed to a named Vidjet employee, who syncs
+    it. It refreshes daily thereafter. There is no product API.
+relationships:
+- from: Site
+  to: Campaign
+  type: has_many
+  via: siteId
+  evidence: GET /widgets?siteId=... returns the campaigns belonging to that site.
+- from: Site
+  to: Order
+  type: has_many
+  via: siteId
+  evidence: POST /orders carries siteId alongside orderId.
+- from: Order
+  to: OrderLine
+  type: has_many
+  via: products[]
+  evidence: POST /orders request body embeds products[] inline.
+- from: OrderLine
+  to: Product
+  type: belongs_to
+  via: productId
+  evidence: OrderLine.productId is the merchant catalog product identifier.
+- from: Site
+  to: Product
+  type: has_many
+  via: product feed
+  evidence: help.vidjet.io/en/articles/8446441-import-product-feed-to-vidjet
+id_conventions:
+  primary_key: _id
+  foreign_key_style: <entity>Id (siteId, orderId, cartId, productId, variantId)
+  format: UUID v4 for Vidjet-owned entities; merchant-native ids passed as strings
+gaps:
+- Campaign, Video, Widget and Analytics entities are visible in the product but absent from any published payload; they are not modelled here.
+- No JSON Schema, OpenAPI components, or object reference is published to validate this against.

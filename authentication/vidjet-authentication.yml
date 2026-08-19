@@ -1,0 +1,86 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  wordpress.org/plugins/vidjet (includes/class-vidjet-api.php,
+  includes/class-vidjet-settings.php, v1.1.4) + media.vidjet.io/client-app.js +
+  live unauthenticated probes of app-api.vidjet.io on 2026-08-13
+note: >-
+  Vidjet publishes no authentication documentation. There is no OpenAPI to derive
+  securitySchemes from, so this profile is derived from the two first-party
+  artifacts Vidjet does publish (the GPL WordPress plugin source and the public
+  embed script) plus what the live API returned to anonymous requests. Nothing
+  here is inferred from naming or convention.
+docs: null
+summary:
+  types: [none, apiKey]
+  documented_by_provider: false
+  oauth2: false
+  openid_connect: false
+  mutual_tls: false
+  api_key_in: [query, body]
+schemes:
+- name: none
+  type: none
+  applies_to:
+  - GET /widgets
+  evidence: >-
+    GET https://app-api.vidjet.io/widgets returned HTTP 200 with
+    application/json and no credential of any kind on 2026-08-13. With no siteId
+    it returned a default test site record; with an unknown siteId it returned
+    200 and an empty site object. Read access to the campaign-resolution endpoint
+    is anonymous by design — it is called from the browser by the embed script.
+- name: siteId
+  type: apiKey
+  in: query
+  parameter: siteId
+  format: UUID v4
+  secret: false
+  evidence: >-
+    The documented embed snippet is
+    media.vidjet.io/client-app.js?siteId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx and
+    the script forwards it as GET ${backend}/widgets?siteId=... . It is a public
+    tenant identifier shipped in page source, not a credential.
+  note: >-
+    Because it is embedded in every customer's HTML, siteId must be treated as
+    public. It selects a tenant; it does not authorize anything.
+- name: authToken
+  type: apiKey
+  in: body
+  parameter: integrationKeys.authToken
+  secret: true
+  evidence: >-
+    Vidjet_Api::install() POSTs to /plugins/install and, on HTTP 200, stores
+    `siteId` and `authToken` from the response via
+    Vidjet_Settings::set_settings(); the plugin persists them in a WordPress
+    option. The pair is also accepted on the way in as
+    body.integrationKeys.{siteId,authToken} when re-installing.
+  issued_by: POST https://app-api.vidjet.io/plugins/install
+  rotation: not documented
+  scopes: none published
+- name: woocommerce-auth-callback
+  type: oauth-like-handshake
+  applies_to:
+  - POST /woocommerce/auth-callback
+  evidence: >-
+    The plugin registers https://app-api.vidjet.io/woocommerce/auth-callback as
+    the return endpoint of the WooCommerce REST API key-generation flow, so
+    Vidjet receives WooCommerce consumer credentials for the merchant store.
+    OPTIONS on that path returned 200 with `Allow: POST`.
+  note: >-
+    This is WooCommerce's authorization handshake, not a Vidjet OAuth server.
+    Vidjet publishes no authorization or token endpoint of its own — every
+    /.well-known/oauth-authorization-server and /.well-known/openid-configuration
+    probe on every Vidjet host returned 404 or 403.
+transport:
+  https_only: true
+  observed_headers:
+    access-control-allow-origin: '*'
+    access-control-allow-methods: PUT, POST, GET, DELETE, OPTIONS
+    access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept
+  note: >-
+    CORS is fully open on app-api.vidjet.io, consistent with an API designed to be
+    called from arbitrary merchant storefronts.
+gaps:
+- No published authentication documentation of any kind.
+- No documented way for a merchant to obtain an API credential outside of installing a platform plugin.
+- No scopes, no token expiry, no rotation or revocation policy published.

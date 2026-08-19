@@ -1,0 +1,108 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  api.wordpress.org plugin API, registry.npmjs.org search, pypi.org,
+  packagist.org, api.github.com, addons.prestashop.com, apps.shopify.com,
+  media.vidjet.io — all queried 2026-08-13
+note: >-
+  Vidjet ships NO client library for its API in any language. What it distributes
+  are storefront-platform integration packages and one CDN-hosted browser embed.
+  No `SDKs` pointer is emitted in apis.yml, because none of these is a client SDK
+  for app-api.vidjet.io — emitting one would credit Vidjet with a developer
+  artifact it does not ship.
+registries_checked:
+- registry: npm
+  query: https://registry.npmjs.org/-/v1/search?text=vidjet
+  results: 0
+- registry: pypi
+  query: https://pypi.org/pypi/vidjet/json
+  status: 404
+- registry: packagist
+  query: https://packagist.org/search.json?q=vidjet
+  results: 0
+- registry: github
+  query: https://api.github.com/users/vidjet
+  note: >-
+    github.com/Vidjet is an unrelated individual account (type User, 1 repo,
+    Russian-language 1C extension). Vidjet Technologies operates no GitHub
+    organization; no first-party source repository was found.
+packages:
+- language: php
+  registry: wordpress-org
+  name: vidjet
+  title: Vidjet - Shoppable Videos
+  url: https://wordpress.org/plugins/vidjet/
+  download: https://downloads.wordpress.org/plugin/vidjet.1.1.4.zip
+  install: Install "Vidjet - Shoppable Videos" from the WordPress plugin directory
+  official: true
+  version: 1.1.4
+  published: '2025-01-13'
+  license: GPL-3.0
+  metadata:
+    author: Leo Petit (profiles.wordpress.org/leovidjet)
+    requires_wp: '4.6'
+    tested_up_to: 6.5.10
+    requires_php: '5.6'
+    added: '2021-10-04'
+    active_installs: 100
+    rating: 100
+    num_ratings: 4
+  release_history:
+  - version: 1.0.0
+    note: Release Vidjet plugin
+  - version: 1.1.0
+    note: API integration with WooCommerce to track products and conversion
+  - version: 1.1.1
+    note: Fixing uninstall
+  - version: 1.1.2
+    note: Improving ATC logic
+  currency_note: >-
+    Last release 2025-01-13, 19 months before this probe; the bundled
+    changelog.txt stops at 1.1.2 while the shipped Stable tag is 1.1.4, and
+    "Tested up to" is WordPress 6.5.x. This package is the ONLY place Vidjet
+    publishes its API base URL and endpoint paths (includes/class-vidjet-api.php).
+  source_of_api_evidence: true
+- language: javascript
+  registry: cdn
+  name: client-app.js
+  url: https://media.vidjet.io/client-app.js
+  install: >-
+    <script src="https://media.vidjet.io/client-app.js?siteId=YOUR-SITE-ID"
+    id="vidjet"></script>
+  official: true
+  version: null
+  published: null
+  version_note: >-
+    UNPINNED. The documented script tag carries no version in the path and the S3
+    origin returns no version metadata endpoint, so neither a consumer nor this
+    pipeline can tell which build is being served. Observed payload on 2026-08-13
+    was 113,844 bytes; the help center notes an unrelated URL migration for sites
+    integrated before November 2024.
+  distribution: Amazon S3 (media.vidjet.io)
+- language: php
+  registry: prestashop-addons
+  name: Vidjet - Shoppable Videos & Stories
+  url: https://addons.prestashop.com/en/videos-music/93840-vidjet-shoppable-videos-stories.html
+  official: true
+  version: null
+  published: null
+  version_note: >-
+    PrestaShop Addons publishes no unauthenticated metadata endpoint; version and
+    release date were not readable without a marketplace account.
+- language: javascript
+  registry: shopify-app-store
+  name: Vidjet Shoppable Videos +Story
+  url: https://apps.shopify.com/vidjet
+  developer: Vidjet Technologies
+  official: true
+  version: null
+  published: null
+  version_note: >-
+    The Shopify App Store exposes no version or release date for an app listing;
+    listing showed 5.0 rating from 100 reviews and pricing from $49/month on
+    2026-08-13.
+summary:
+  official_client_sdks: 0
+  platform_integration_packages: 4
+  languages: [php, javascript]
+  sdk_pointer_emitted: false

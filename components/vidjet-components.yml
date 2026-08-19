@@ -1,0 +1,87 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.vidjet.io/ , https://www.vidjet.io/pricing ,
+  https://help.vidjet.io/ (llms.txt article index), and the published loader at
+  https://media.vidjet.io/client-app.js (fetched 2026-08-13, HTTP 200)
+note: >-
+  Client-side embeddable components are Vidjet's actual integration surface — the
+  product is delivered as a browser widget, not as an API. This artifact records
+  the loader, the player, and the widget families Vidjet publishes. It does NOT
+  enumerate configuration options: those are set in the app.vidjet.io console,
+  which is authenticated, and guessing them would be fabrication.
+delivery: script-tag
+loaders:
+- name: Vidjet client app
+  url: https://media.vidjet.io/client-app.js
+  element_id: vidjet
+  required_param: siteId (UUID v4, query string on the script src)
+  snippet: >-
+    <!-- Vidjet Script - Start --> <script> (function(d, s, id) { if
+    (d.getElementById(id)) return; var t = d.getElementsByTagName(s)[0]; var vis =
+    d.createElement(s); vis.id = id; vis.src =
+    'https://media.vidjet.io/client-app.js?siteId=YOUR-SITE-ID';
+    t.parentNode.insertBefore(vis, t); })(document, 'script', 'vidjet'); </script>
+    <!-- Vidjet Script - End -->
+  placement: <head>
+  loading: asynchronous
+  versioned: false
+  size_bytes_observed: 113844
+  docs: https://help.vidjet.io/en/articles/5523099-manual-integration-script-js
+  behaviour: >-
+    Resolves its environment from its own script src, then calls GET
+    ${backend}/widgets with siteId, sessionId, isMobile, page URL and analytics
+    context, and renders whatever campaigns come back.
+- name: Vidjet player
+  url: https://player.vidjet.io/{siteId}/{campaignId}
+  type: iframe
+  note: >-
+    The rendered video experience is an iframe served from player.vidjet.io,
+    addressed by site UUID and campaign UUID. Root returns a Vue SPA shell
+    ("player-app").
+component_families:
+- family: Stories
+  description: Instagram-style tappable story rail; the marquee format.
+- family: Carousel
+  description: Inline horizontally scrolling video row placed in-page.
+- family: Bubble
+  description: Floating circular video bubble anchored to a page corner.
+- family: Embed
+  description: Video component embedded inline in the page layout (element id vidjet_embbed observed in the loader).
+- family: Popup
+  description: Modal video overlay triggered by display rules.
+- family: Sticky Play Button
+  description: Persistent play affordance pinned to the viewport.
+capabilities_published:
+- Product tagging inside videos (multiple products per video)
+- Add-to-cart CTA
+- Direct-to-checkout CTA
+- Custom CTA
+- Coupon codes
+- Email collector (syncs to Klaviyo or Google Sheets)
+- Product descriptions, real-time inventory, dynamic currency
+- Video chapters (Instagram-like timestamps)
+- Animated / image thumbnails and thumbnail grouping
+- 40+ customization options, custom CSS and custom JS (per pricing table)
+storefront_hooks_observed:
+- platform: Shopify
+  calls: POST /cart/add.js, GET /cart.json, window.routes.cart_url
+- platform: Magento
+  calls: POST {origin}/checkout/cart/add/ with X-Requested-With XMLHttpRequest
+  note: >-
+    The loader talks to the HOST STORE's cart endpoints directly from the browser
+    to implement add-to-cart, which is why the component works without any
+    server-side integration by the merchant.
+install_paths:
+- Manual script tag
+- Google Tag Manager
+- Shopify app (apps.shopify.com/vidjet)
+- WordPress / WooCommerce plugin (wordpress.org/plugins/vidjet)
+- Magento
+- Wix
+- Webflow
+- PrestaShop (addons.prestashop.com)
+- Salesforce Commerce Cloud
+gaps:
+- No published component API (no documented data-* attributes, JS init options, or events).
+- The loader is unpinned, so a merchant cannot lock a build.

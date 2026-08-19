@@ -1,0 +1,117 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  live probes of https://app-api.vidjet.io on 2026-08-13 +
+  wordpress.org/plugins/vidjet v1.1.4 source + media.vidjet.io/client-app.js
+note: >-
+  Vidjet publishes no API conventions, style guide, or reference. Everything below
+  was observed on the wire or read out of Vidjet's own published plugin/embed
+  source. Where a convention is absent it is recorded as absent — that is the
+  finding, not a gap to fill.
+api: app-api.vidjet.io
+auth_style:
+  summary: >-
+    Anonymous for the browser-facing read endpoint; a server-issued
+    siteId/authToken pair for plugin endpoints. See
+    authentication/vidjet-authentication.yml.
+  documented: false
+idempotency:
+  supported: false
+  header: null
+  evidence: >-
+    No Idempotency-Key or equivalent header appears anywhere in the published
+    plugin source or embed script, and none of the observed responses advertised
+    one. POST /orders and POST /plugins/install carry no client-supplied
+    idempotency key. No `Idempotency` pointer is emitted in apis.yml.
+pagination:
+  supported: false
+  evidence: >-
+    GET /widgets returns whole arrays (campaignsReturned, campaignsToKill,
+    campaignsToShowManual) with no cursor, offset, limit, or link header
+    observed.
+versioning:
+  scheme: none
+  in_path: false
+  in_header: false
+  evidence: >-
+    The base URL is https://app-api.vidjet.io with unversioned paths (/widgets,
+    /orders, /plugins/install). /v1/* probes returned 404. No API-Version or
+    Accept-Version header was returned.
+  note: >-
+    The help center records one breaking distribution change — sites integrated
+    before November 2024 must update their script URL — which was communicated in
+    a support article rather than through any versioning mechanism.
+content_types:
+  request: application/json; charset=utf-8 (POST /orders) and form-encoded body (POST /plugins/install, via wp_remote_post default)
+  response: application/json; charset=utf-8
+error_envelope:
+  format: none
+  rfc9457: false
+  observed_behaviour: >-
+    SOFT 200. GET /widgets?siteId=00000000-0000-0000-0000-000000000000 (an
+    identifier that resolves to nothing) returned HTTP 200 with
+    {"campaignsReturned":[],"site":{},"campaignsToKill":[],"campaignsToShowManual":[]}
+    — an empty object rather than a 404 and rather than any error document. The
+    plugin's own error handling reads $response['response']['code'] and treats
+    anything other than 200 as failure, passing the raw body through to a
+    WordPress admin redirect, which implies there is no structured error contract
+    for it to parse either.
+  note: >-
+    No ErrorCatalog artifact or pointer is emitted: there is no error catalog to
+    record, and asserting one would credit error semantics the API does not have.
+rate_limit_signaling:
+  headers: []
+  evidence: >-
+    No X-RateLimit-*, RateLimit-*, or Retry-After header was present on any
+    observed response. See rate-limits/vidjet-rate-limits.yml.
+caching:
+  headers_observed: [etag, vary]
+  cache_control: absent
+  evidence: >-
+    Responses carry a weak ETag (e.g. W/"52-iJ+s1PTahQxuwA8QHIwA6FvHF+8") and
+    Vary: Accept-Encoding, but no Cache-Control or Last-Modified.
+request_id_tracing:
+  supported: false
+  evidence: No X-Request-Id, X-Correlation-Id, or traceparent header observed on any response.
+cors:
+  allow_origin: '*'
+  allow_methods: PUT, POST, GET, DELETE, OPTIONS
+  allow_headers: Origin, X-Requested-With, Content-Type, Accept
+  preflight_useful: true
+  note: >-
+    OPTIONS is the only reliable discovery signal this API offers. A known route
+    answers 200 with an Allow header naming its real methods (/widgets ->
+    "GET,HEAD"; /plugins/install, /plugins/uninstall, /orders,
+    /woocommerce/auth-callback -> "POST"), while an unknown path answers 404. A
+    control probe of three invented paths returned 404, which is what makes the
+    Allow readings trustworthy.
+identifiers:
+  primary_key_field: _id
+  format: UUID v4
+  examples_are_tenant_ids: true
+  evidence: >-
+    site._id, campaign ids and siteId values are all UUID v4 in both the observed
+    response and the embed script's hard-coded per-customer branches.
+field_style:
+  case: camelCase
+  timestamps: ISO-8601 UTC (creationDate, modificationDate, integrationDate)
+  money: >-
+    Order payloads use totalATI (all taxes included) and totalET (excluding
+    taxes) as numbers, with currency carried on the site record rather than
+    per-amount.
+server:
+  stack: 'Express (x-powered-by: Express)'
+  http_version: HTTP/2
+  environments:
+    production: https://app-api.vidjet.io
+    development: https://dev-app-api.vidjet.io
+  note: >-
+    The public embed script names a dev environment (dev-app-api.vidjet.io,
+    dev-player.vidjet.io) and a localhost mode. dev-app-api.vidjet.io does not
+    resolve publicly; it is not a customer sandbox and no sandbox/ artifact is
+    written.
+cross_links:
+  authentication: authentication/vidjet-authentication.yml
+  data_model: data-model/vidjet-data-model.yml
+  lifecycle: lifecycle/vidjet-lifecycle.yml
+  rate_limits: rate-limits/vidjet-rate-limits.yml

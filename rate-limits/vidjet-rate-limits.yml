@@ -1,0 +1,43 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  live responses from https://app-api.vidjet.io/widgets (2026-08-13) +
+  https://www.vidjet.io/pricing + https://help.vidjet.io/llms.txt
+limit_count: 0
+note: >-
+  Vidjet publishes NO API rate limits, and the API returns no rate-limit signal of
+  any kind. An agent calling app-api.vidjet.io has no way to know its budget or
+  when to back off. What Vidjet does publish are commercial usage quotas per
+  pricing tier — those are metered product entitlements, not request limits, and
+  are recorded separately in plans/vidjet-plans-pricing.yml rather than dressed up
+  as rate limits here.
+limits: []
+response_headers:
+  observed: []
+  x_ratelimit_family: absent
+  ratelimit_family: absent
+  retry_after: absent
+  evidence: >-
+    Full response header set observed on GET /widgets was: date, content-type,
+    content-length, x-powered-by, access-control-allow-origin,
+    access-control-allow-headers, access-control-allow-methods, etag, vary. No
+    rate-limit, quota, or retry header was present on any request.
+exhaustion:
+  status_code: not documented
+  body: not documented
+  observed: >-
+    No throttling was observed during this pass. This pipeline does not probe for
+    limits by generating load; absence here means "not published and not
+    signalled", not "no limit exists".
+commercial_quotas:
+  documented: true
+  source: https://www.vidjet.io/pricing
+  note: >-
+    Per-tier video views per month (4,000 / 10,000 / 30,000 / 60,000), hosted
+    videos (40 / 100 / 300 / 600) and video upload file size (500 MB / 500 MB /
+    750 MB / 1 GB). Impressions per month and active widgets are advertised as
+    unlimited on every tier. Overage behaviour is not published.
+gaps:
+- No published rate limit for any endpoint.
+- No RateLimit-* or Retry-After header, so no runtime signal for a client or agent.
+- No documented behaviour on quota exhaustion.

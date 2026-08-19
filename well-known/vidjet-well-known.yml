@@ -1,0 +1,129 @@
+generated: '2026-08-13'
+method: probed
+source: live GET probes of every Vidjet host on 2026-08-13
+note: >-
+  Every canonical /.well-known/ path was probed on every Vidjet-controlled host
+  and NOT ONE returned a document Vidjet publishes. No WellKnown or SecurityTxt
+  pointer is emitted in apis.yml as a result. Two results need reading carefully:
+  (1) help.vidjet.io/.well-known/security.txt returns HTTP 200 but the body is
+  INTERCOM'S security.txt — the help center is a hosted Intercom property and the
+  file names Intercom's disclosure program, not Vidjet's, so it is recorded here
+  and explicitly NOT credited to Vidjet; (2) app.vidjet.io answers HTTP 200 with
+  the same 3,160-byte SPA HTML shell for every path including /.well-known/*,
+  /openapi.json and /llms.txt, which is a catch-all, not a document.
+hosts:
+- host: https://www.vidjet.io
+  server: Webflow
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  note: >-
+    All /.well-known/* paths return 404 with the body "Invalid .well-known
+    request".
+- host: https://app-api.vidjet.io
+  server: Express
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  note: >-
+    The API host answers every unknown path with an honest Express 404
+    ("Cannot GET /..."), so these are true absences, not a catch-all.
+- host: https://help.vidjet.io
+  server: Intercom (hosted help center)
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: vidjet-help-intercom-security.txt
+    third_party: true
+    belongs_to: Intercom
+    credited_to_vidjet: false
+    note: >-
+      Body is Intercom's own RFC 9116 file ("Intercom - reporting security
+      vulnerabilities to Intercom"). It documents Intercom's program, not
+      Vidjet's, so it earns Vidjet no SecurityTxt/Security pointer.
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /llms.txt
+    status: 200
+    file: ../llms/vidjet-llms.txt
+    note: Intercom-generated llms.txt of the Vidjet help center; content is Vidjet's.
+- host: https://app.vidjet.io
+  server: nginx (single-page app)
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/ai-plugin.json
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  note: >-
+    /.well-known/* is 403 Forbidden; every other unknown path returns 200 with a
+    3,160-byte SPA HTML shell. Treated as a miss on both counts.
+- host: https://media.vidjet.io
+  server: Amazon S3
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+  note: S3 bucket returns AccessDenied XML for anything not an object key.
+- host: https://www.vidjet.com
+  server: Webflow (locale sibling of www.vidjet.io)
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+summary:
+  hosts_probed: 6
+  paths_probed: 38
+  documents_found_belonging_to_vidjet: 0
+  agent_card_found: false
+  security_txt_found: false
+  pointers_emitted: []

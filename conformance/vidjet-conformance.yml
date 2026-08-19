@@ -1,0 +1,89 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  live probes of app-api.vidjet.io (2026-08-13),
+  https://www.vidjet.io/terms-of-service , https://www.vidjet.io/privacy-policy ,
+  well-known/vidjet-well-known.yml
+note: >-
+  Vidjet publishes no certification program, no trust center, and no security
+  page. It does publish a GDPR-shaped data processing agreement inside its Terms
+  of Service. No `Compliance` pointer is emitted in apis.yml: there are no named
+  certifications (no SOC 2, ISO 27001, PCI DSS, HIPAA or FedRAMP claim appears
+  anywhere on the site), and crediting a contractual DPA as a published compliance
+  program would overstate the posture.
+standards:
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No authorization or token endpoint published; /.well-known/oauth-authorization-server
+    returned 404 on app-api.vidjet.io and www.vidjet.io, 403 on app.vidjet.io.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returned 404/403 on every Vidjet host.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    No application/problem+json anywhere; an unresolvable identifier returns HTTP
+    200 with an empty object rather than any error document.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: >-
+    No /.well-known/security.txt on any Vidjet-controlled host. The 200 at
+    help.vidjet.io is Intercom's own file (Canonical:
+    app.intercom.com/.well-known/security.txt).
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header observed.
+- id: rfc8615-well-known
+  conforms: false
+  evidence: No well-known document published; see well-known/vidjet-well-known.yml.
+- id: openapi
+  conforms: false
+  evidence: >-
+    38 spec-path probes across 6 hosts (openapi.json/yaml, swagger.json,
+    /v1/openapi.json, /api-docs, /docs, /redoc) returned 404, or 200-with-SPA-HTML
+    on app.vidjet.io.
+- id: graphql
+  conforms: false
+  evidence: /graphql returned 404 on app-api.vidjet.io and on the web hosts.
+- id: asyncapi
+  conforms: false
+  evidence: No event, streaming or webhook surface is published or documented.
+- id: mcp
+  conforms: false
+  evidence: /mcp returned 404 on app-api.vidjet.io; mcp.vidjet.io does not resolve.
+- id: a2a
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json probed on all 6
+    hosts; no JSON object with AgentCard shape was returned.
+- id: cors
+  conforms: true
+  evidence: >-
+    app-api.vidjet.io returns Access-Control-Allow-Origin *, allow-methods PUT,
+    POST, GET, DELETE, OPTIONS, and answers OPTIONS preflight with an accurate
+    Allow header per route.
+- id: https-tls
+  conforms: true
+  evidence: >-
+    All hosts serve HTTPS over HTTP/2; see security/vidjet-domain-security.yml for
+    the TLS/HSTS/DNSSEC probe.
+regulatory:
+- id: gdpr
+  claims_compliance: true
+  certification: none
+  evidence: >-
+    Privacy policy names VIDJET TECHNOLOGIES, S.L. as controller under GDPR and
+    the Spanish DPA 3/2018; Terms of Service embed a processor agreement with a
+    Subprocessors clause (s.5) and technical/organizational security measures
+    (s.11) covering password management, encryption/hashing and access
+    revocation.
+  source:
+  - https://www.vidjet.io/privacy-policy
+  - https://www.vidjet.io/terms-of-service
+- id: ccpa
+  claims_compliance: false
+  evidence: Not mentioned.
+certifications_published: []
+trust_center: null
+compliance_pointer_emitted: false

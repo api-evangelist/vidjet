@@ -1,0 +1,83 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.vidjet.io/pricing
+fetched: '2026-08-13'
+http_status: 200
+currency: USD
+billing_periods: [monthly, annual]
+annual_discount: 20%
+free_trial: true
+free_tier: false
+plan_count: 4
+note: >-
+  Prices are per merchant site. The published comparison table renders per-tier
+  availability as icons, so feature-to-tier attribution is NOT recorded for the
+  checklist rows — only the numeric quotas the table states in text. One row in
+  the CUSTOMER SUPPORT block reads "API integration"; Vidjet publishes no
+  reference or contract for it, so this artifact records that the row exists and
+  makes no claim about which tiers include it.
+plans:
+- name: Starter
+  price_monthly: 49
+  price_annual_per_month: 39
+  currency: USD
+  description: Tailored for small businesses looking to add videos seamlessly.
+  limits:
+    impressions_per_month: unlimited
+    video_views_per_month: 4000
+    hosted_videos: 40
+    active_widgets: unlimited
+    video_upload_file_size: 500 MB
+  includes: [remove watermark, multiple domains, core features]
+  overage: not published
+- name: Growth
+  price_monthly: 99
+  price_annual_per_month: 79
+  currency: USD
+  description: Built for e-commerce brands producing videos frequently.
+  limits:
+    impressions_per_month: unlimited
+    video_views_per_month: 10000
+    hosted_videos: 100
+    active_widgets: unlimited
+    video_upload_file_size: 500 MB
+  includes: [remove watermark, multiple domains, core features]
+  overage: not published
+- name: Scale
+  price_monthly: 249
+  price_annual_per_month: 199
+  currency: USD
+  description: Designed for established brands, with hundreds of products and videos.
+  limits:
+    impressions_per_month: unlimited
+    video_views_per_month: 30000
+    hosted_videos: 300
+    active_widgets: unlimited
+    video_upload_file_size: 750 MB
+  includes: [remove watermark, multiple domains, core features]
+  overage: not published
+- name: Pro
+  price_monthly: 499
+  price_annual_per_month: 399
+  currency: USD
+  description: Made for high-volume stores, with thousands of products and videos.
+  limits:
+    impressions_per_month: unlimited
+    video_views_per_month: 60000
+    hosted_videos: 600
+    active_widgets: unlimited
+    video_upload_file_size: 1 GB
+  includes: [remove watermark, multiple domains, core features]
+  overage: not published
+published_feature_rows:
+  interaction_usage: [impressions per month, video views per month, number of active widgets]
+  media_infrastructure: [hosted videos, video upload file size, video CMS, associate products to videos, bulk upload, edit video thumbnails, auto import from Google Drive, advanced video compression]
+  shoppable_video: [tag multiple products on videos, add to cart CTA, direct-to-checkout CTA, custom CTA, coupon codes, email collector synced with Klaviyo, product descriptions, real-time inventory, dynamic currency, 10+ widgets, 40+ customization options]
+  admin_panel: [catalog synchronization, at-scale embedding, bulk actions & automations, segmentation by languages, display rules, connect multiple domains, team management, remove Vidjet watermark]
+  analytics: [sales KPIs, traffic KPIs, engagement KPIs, best vs worst videos, graph reports, device segmentation reports, CSV exports]
+  customer_support: [chat & email support, direct contact with founders, monthly email reports, custom CSS, custom JS, API integration]
+enterprise_contact_only: false
+signup: https://app.vidjet.io/signup
+demo: https://calendly.com/demo-vidjet/30min
+marketplace_pricing:
+  shopify: From $49/month, free trial available (apps.shopify.com/vidjet)
