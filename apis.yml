@@ -39,6 +39,17 @@ created: '2026-07-17'
 modified: '2026-08-13'
 tags:
 - Company
+- E-Commerce
+- Video
+- Shoppable Video
+- Shopify
+- Conversion
+- Marketing
+- No-Code
+- Widgets
+- Embed
+tags_raw:
+- Company
 - E-commerce
 - Video
 - Shoppable Video
@@ -67,6 +78,11 @@ apis:
   humanURL: https://help.vidjet.io/en/articles/5523099-manual-integration-script-js
   baseURL: https://app-api.vidjet.io
   tags:
+  - Video
+  - Widgets
+  - E-Commerce
+  - Embed
+  tags_raw:
   - Video
   - Widgets
   - E-commerce
