@@ -81,3 +81,34 @@ signup: https://app.vidjet.io/signup
 demo: https://calendly.com/demo-vidjet/30min
 marketplace_pricing:
   shopify: From $49/month, free trial available (apps.shopify.com/vidjet)
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  units: []
+  plans:
+  - name: Starter
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods: []
+  - name: Growth
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods: []
+  - name: Scale
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods: []
+  - name: Pro
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods: []
